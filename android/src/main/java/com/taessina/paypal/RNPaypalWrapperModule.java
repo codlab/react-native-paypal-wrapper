@@ -144,7 +144,13 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
       config = config.merchantName(merchantName)
         .merchantPrivacyPolicyUri(Uri.parse(merchantPrivacyPolicyUri))
         .merchantUserAgreementUri(Uri.parse(merchantUserAgreementUri));
+    }
 
+    if(params.hasKey("acceptCreditCards")) {
+      config = config.acceptCreditCards(params.getBoolean("acceptCreditCards"));
+    } else {
+      //deactivate credit card by default
+      config = config.acceptCreditCards(false);
     }
 
     Intent intent = new Intent(reactContext, PayPalService.class);
